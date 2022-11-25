@@ -1,20 +1,24 @@
+#define DL_SLEEP 450
+
 #include <nvbench/nvbench.cuh>
-
 #include <thrust/device_vector.h>
-#include <thrust/sequence.h>
-
-// Why is this in detail?
 #include <thrust/detail/raw_pointer_cast.h>
-
 #include <cub/device/device_scan.cuh>
+
+__device__ ulonglong2 operator+(const ulonglong2& lhs, const ulonglong2 &rhs) 
+{           
+  ulonglong2 result;
+  result.x = lhs.x + rhs.x;
+  result.y = lhs.y + rhs.y;
+  return result;
+}                                                                                                 
 
 template <typename T>
 static void in_place(nvbench::state &state, nvbench::type_list<T>)
 {
   const auto elements = static_cast<std::size_t>(state.get_int64("Elements"));
 
-  thrust::device_vector<T> data(elements);
-  thrust::sequence(data.begin(), data.end());
+  thrust::device_vector<T> data(elements, T{});
 
   state.add_element_count(elements);
   state.add_global_memory_reads<T>(elements, "Size");
@@ -42,8 +46,7 @@ using types = nvbench::type_list<nvbench::uint8_t,
                                  nvbench::uint16_t,
                                  nvbench::uint32_t,
                                  nvbench::uint64_t,
-                                 nvbench::float32_t,
-                                 nvbench::float64_t>;
+                                 ulonglong2>;
 NVBENCH_BENCH_TYPES(in_place, NVBENCH_TYPE_AXES(types))
-  .set_name("cub::DeviceScan::ExclusiveSum (in_place)")
-  .add_int64_power_of_two_axis("Elements", nvbench::range(16, 30, 2));
+  .set_name("cub::DeviceScan")
+  .add_int64_power_of_two_axis("Elements", nvbench::range(16, 30, 6));
