@@ -1,5 +1,3 @@
-#define DL_SLEEP 450
-
 #include <nvbench/nvbench.cuh>
 #include <thrust/device_vector.h>
 #include <thrust/detail/raw_pointer_cast.h>
