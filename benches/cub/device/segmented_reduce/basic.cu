@@ -131,7 +131,8 @@ void basic(nvbench::state &state, nvbench::type_list<T>)
 using types = nvbench::type_list<nvbench::uint8_t,
                                  nvbench::uint16_t,
                                  nvbench::uint32_t,
-                                 nvbench::uint64_t>;
+                                 nvbench::uint64_t,
+                                 __int128>;
 
 NVBENCH_BENCH_TYPES(basic, NVBENCH_TYPE_AXES(types))
   .set_name("cub::DeviceSegmentedReduce::Sum")

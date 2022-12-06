@@ -43,7 +43,8 @@ using types = nvbench::type_list<nvbench::uint8_t,
                                  nvbench::uint32_t,
                                  nvbench::uint64_t,
                                  nvbench::float32_t,
-                                 nvbench::float64_t>;
+                                 nvbench::float64_t,
+                                 __int128>;
 NVBENCH_BENCH_TYPES(in_place, NVBENCH_TYPE_AXES(types))
   .set_name("cub::DeviceScan::ExclusiveSum (in_place)")
   .add_int64_power_of_two_axis("Elements", nvbench::range(16, 30, 2));

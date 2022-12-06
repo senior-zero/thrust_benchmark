@@ -123,7 +123,7 @@ inline std::vector<std::string> select_if_type_axis_names()
   return {"T", "Op", "Pattern"};
 }
 
-using types = nvbench::type_list<nvbench::uint32_t, nvbench::uint64_t>;
+using types = nvbench::type_list<nvbench::uint32_t, nvbench::uint64_t, __int128>;
 
 using ops = nvbench::enum_type_list<select_op_type::greater_than_middle,
                                     select_op_type::greater_than_zero,

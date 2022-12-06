@@ -106,7 +106,8 @@ void basic(nvbench::state &state,
 using types = nvbench::type_list<nvbench::int8_t,
                                  nvbench::int16_t,
                                  nvbench::int32_t,
-                                 nvbench::int64_t>;
+                                 nvbench::int64_t,
+                                 __int128>;
 
 NVBENCH_BENCH_TYPES(basic, NVBENCH_TYPE_AXES(types))
   .set_name("cub::DeviceRunLengthEncode::Encode")
