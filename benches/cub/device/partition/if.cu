@@ -87,9 +87,6 @@ static void basic(nvbench::state &state,
     op_construction_helper<SelectOpType>::template create_select_op<T>(
       elements);
 
-  auto selected_elements =
-    thrust::count_if(thrust::device, input.cbegin(), input.cend(), select_op);
-
   size_t tmp_size;
   cub::DevicePartition::If(nullptr,
                            tmp_size,
@@ -103,7 +100,7 @@ static void basic(nvbench::state &state,
 
   state.add_element_count(elements);
   state.add_global_memory_reads(input.get_allocation_size());
-  state.add_global_memory_writes<T>(selected_elements);
+  state.add_global_memory_writes<T>(elements);
 
   state.exec([&](nvbench::launch &launch) {
     std::size_t temp_size = tmp.size(); // need an lvalue
