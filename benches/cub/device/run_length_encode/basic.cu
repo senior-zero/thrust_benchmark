@@ -34,8 +34,8 @@ void basic(nvbench::state &state,
 
   thrust::device_vector<T> input(elements);
   thrust::device_vector<T> unique_output(elements);
-  thrust::device_vector<std::size_t> counts_output(elements);
-  thrust::device_vector<std::size_t> num_runs(1);
+  thrust::device_vector<int> counts_output(elements);
+  thrust::device_vector<int> num_runs(1);
 
   const auto pattern = state.get_string("Pattern");
   if (pattern == "constant")
@@ -63,8 +63,8 @@ void basic(nvbench::state &state,
 
   const T *d_input = thrust::raw_pointer_cast(input.data());
   T *d_unique_output = thrust::raw_pointer_cast(unique_output.data());
-  std::size_t *d_counts_output = thrust::raw_pointer_cast(counts_output.data());
-  std::size_t *d_num_runs = thrust::raw_pointer_cast(num_runs.data());
+  int *d_counts_output = thrust::raw_pointer_cast(counts_output.data());
+  int *d_num_runs = thrust::raw_pointer_cast(num_runs.data());
 
   {
     state.add_element_count(elements);
@@ -112,4 +112,4 @@ using types = nvbench::type_list<nvbench::int8_t,
 NVBENCH_BENCH_TYPES(basic, NVBENCH_TYPE_AXES(types))
   .set_name("cub::DeviceRunLengthEncode::Encode")
   .add_int64_power_of_two_axis("Elements", nvbench::range(20, 30, 2))
-  .add_string_axis("Pattern", {"random"});
+  .add_string_axis("Pattern", {"constant"});
